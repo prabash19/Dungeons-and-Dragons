@@ -5,13 +5,16 @@ export default {
   theme: {
     extend: {
       colors: {
-        lightBg: "#ff0000",
+        lightBg: "#f5f5f5",
         darkBg: "#1a1a1a",
         lightText: "#000000",
         darkText: "#f5f5f5",
+      },
+      fontSize: {
+        small: "14px",
+        medium: "26px",
       },
     },
   },
   plugins: [],
 };
-//lightBg: "#f5f5f5",
