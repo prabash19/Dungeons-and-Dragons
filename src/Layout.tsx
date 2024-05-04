@@ -17,9 +17,11 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       }`}
     >
       <NavBar />
-      <div className="pl-4">
-        <ToggleTheme />
-        {children}
+      <div className="pl-4 flex w-full">
+        <div className="bg-red-100 w-full h-full">{children}</div>
+        <div>
+          <ToggleTheme />
+        </div>
       </div>
     </div>
   );

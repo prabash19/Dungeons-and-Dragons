@@ -18,7 +18,7 @@ function NavBar() {
   return (
     <div
       className={`left-0 top-0  bg-slate-500 min-h-screen shadow-md transition-all duration-300 ease-in-out ${
-        openSidebar ? "w-56" : "w-28"
+        openSidebar ? "w-60" : "w-28"
       }`}
     >
       {openSidebar ? (
@@ -38,7 +38,7 @@ function NavBar() {
               return (
                 <li
                   key={i}
-                  className="flex w-full pl-6 mt-5 text-medium  items-center rounded-md hover:bg-red-300 hover:cursor-pointer"
+                  className="flex w-full pl-3 mt-5 text-medium  items-center rounded-md hover:bg-red-300 hover:cursor-pointer"
                   onClick={() => handleRouteChange(_.link)}
                 >
                   {_.icon}
