@@ -1,9 +1,8 @@
-import "./App.css";
-// import ToggleTheme from "./helpers/ToggleTheme";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./components/Home";
-import Favourites from "./components/Favourites";
-import NotFound from "./components/NotFound";
+import "./App.css";
+import Home from "./pages/Home";
+import Favourites from "./pages/Favourites";
+import NotFound from "./pages/NotFound";
 import Layout from "./Layout";
 function App() {
   return (
