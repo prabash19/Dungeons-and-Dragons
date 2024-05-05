@@ -18,7 +18,7 @@ function NavBar() {
   return (
     <div
       className={`left-0 top-0  bg-slate-500 min-h-screen shadow-md transition-all duration-300 ease-in-out ${
-        openSidebar ? "w-60" : "w-28"
+        openSidebar ? "w-64" : "w-28"
       }`}
     >
       {openSidebar ? (

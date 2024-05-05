@@ -1,19 +1,38 @@
 import { useContext } from "react";
 import DarkModeContext from "../context/ThemeContext";
+import { IoMdSunny, IoMdMoon } from "react-icons/io";
 
 const ToggleTheme = () => {
   const darkModeContext = useContext(DarkModeContext);
   if (!darkModeContext) {
     throw new Error("DarkModeContext is not provided");
   }
-  const { toggleDarkMode } = darkModeContext;
+  const { toggleDarkMode, isDarkMode } = darkModeContext;
+
   return (
-    <button
-      onClick={toggleDarkMode}
-      className="px-4 py-2 bg-blue-500 text-white dark:bg-gray-700 rounded"
+    <div
+      className={`z-30  mt-2 rounded-md 
+
+      ${isDarkMode ? "bg-white" : "bg-black"}
+ 
+      `}
     >
-      Toggle Dark Mode
-    </button>
+      {isDarkMode ? (
+        <>
+          <IoMdSunny
+            onClick={toggleDarkMode}
+            className=" text-yellow-400 text-6xl p-2 hover:cursor-pointer"
+          ></IoMdSunny>
+        </>
+      ) : (
+        <>
+          <IoMdMoon
+            onClick={toggleDarkMode}
+            className=" text-white text-6xl p-2 hover:cursor-pointer"
+          ></IoMdMoon>
+        </>
+      )}
+    </div>
   );
 };
 
