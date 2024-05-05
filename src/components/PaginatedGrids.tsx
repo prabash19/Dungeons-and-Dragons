@@ -1,72 +1,48 @@
-import React, { useState, useEffect, useMemo } from "react";
-import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
-import Cards from "./Cards";
+import { useEffect, useState, useMemo } from "react";
 import axios from "axios";
 import { baseUrl } from "../constants/baseUrl";
+import {
+  getLocalStorageValue,
+  removeFromFavourites,
+  saveAsFavourites,
+} from "../helpers/localStorage";
+import LoadingScreen from "./LoadingScreen";
 
-interface PaginatedGridProps {
-  data: Array<{
-    name: string;
-    index: string;
-    level: number;
-    url: string;
-  }>;
-  itemsPerPage?: number;
-}
-
-const PaginatedGrid: React.FC<PaginatedGridProps> = ({
-  data,
-  itemsPerPage = 8,
-}) => {
+function PaginatedGrids({ data }: any) {
+  const itemsPerPage = 8;
+  const [favs, setFavs] = useState(getLocalStorageValue());
   const [currentPage, setCurrentPage] = useState(1);
-  const [additionalData, setAdditionalData] = useState<any[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [combinedData, setCombinedData] = useState<any>([]);
+  const [loading, setLoading] = useState(true);
 
-  const currentData = useMemo(() => {
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    return data.slice(startIndex, endIndex);
-  }, [currentPage, itemsPerPage, data]);
-
-  const totalItems = useMemo(() => data.length, [data]);
   const totalPages = useMemo(
-    () => Math.ceil(totalItems / itemsPerPage),
-    [totalItems, itemsPerPage]
+    () => Math.ceil(data.length / itemsPerPage),
+    [data.length]
   );
+
+  const pageData = useMemo(() => {
+    const startIdx = (currentPage - 1) * itemsPerPage;
+    const endIdx = startIdx + itemsPerPage;
+    return data.slice(startIdx, endIdx);
+  }, [currentPage, data]);
+
   useEffect(() => {
-    const fetchAdditionalData = async () => {
+    const fetchDataForCurrentPage = async () => {
       setLoading(true);
-      setError(null);
-      const urls = currentData.map((item) => `${baseUrl}/${item.index}`);
       try {
-        const responses = await Promise.all(urls.map((url) => axios.get(url)));
-        const fetchedData = responses.map((res) => res.data);
-        setAdditionalData(fetchedData);
-      } catch (err) {
-        setError("Failed to fetch additional data.");
-      } finally {
-        setLoading(false);
+        const responses = await Promise.all(
+          pageData.map((item: any) => axios.get(`${baseUrl}/${item.index}`))
+        );
+        const combinedDataForPage = responses.map((response) => response.data);
+        setCombinedData(combinedDataForPage);
+      } catch (error) {
+        console.error("Error fetching data:", error);
       }
+      setLoading(false);
     };
 
-    fetchAdditionalData();
-  }, [currentPage]);
-
-  const combinedData = useMemo(() => {
-    return currentData.map((item) => {
-      const additionalInfo = additionalData.find(
-        (data) => data.index === item.index
-      );
-      return { ...item, ...additionalInfo };
-    });
-  }, [currentData, additionalData]);
-
-  const handleNext = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
+    fetchDataForCurrentPage();
+  }, [pageData]);
 
   const handlePrev = () => {
     if (currentPage > 1) {
@@ -74,34 +50,65 @@ const PaginatedGrid: React.FC<PaginatedGridProps> = ({
     }
   };
 
+  const handleNext = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const saveFavourites = (id: string) => {
+    saveAsFavourites(id);
+    setFavs(getLocalStorageValue());
+  };
+
+  const removeFavourites = (id: string) => {
+    removeFromFavourites(id);
+    setFavs(getLocalStorageValue());
+  };
+
   return (
     <div className="flex flex-col w-full">
-      {error && <p className="text-red-500">Error: {error}</p>}
       {loading ? (
-        <p>Loading...</p>
+        <LoadingScreen />
       ) : (
         <>
           <div className="grid gap-4 w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {combinedData.map((_, i) => (
-              <Cards
+            {combinedData.map((item: any, i: number) => (
+              <div
                 key={i}
-                name={_.name}
-                range={_.range}
-                index={_.index}
-                casting_time={_.casting_time}
-                level={_.level}
-                duration={_.duration}
-                material={_.material}
-              />
+                className="w-full h-80 bg-blue-300 rounded-xl shadow-lg hover:shadow-2xl hover:cursor-pointer"
+              >
+                <p>Name: {item.name}</p>
+                <p>Range: {item.range}</p>
+                <p>Casting Time: {item.casting_time}</p>
+                <p>Level: {item.level}</p>
+                <p>Duration: {item.duration}</p>
+                {favs.includes(item.index) ? (
+                  <button
+                    className="bg-red-500 p-2"
+                    onClick={() => removeFavourites(item.index)}
+                  >
+                    Remove
+                  </button>
+                ) : (
+                  <button
+                    className="bg-green-500 p-2"
+                    onClick={() => saveFavourites(item.index)}
+                  >
+                    Add to Fav
+                  </button>
+                )}
+              </div>
             ))}
           </div>
+
           <div className="flex w-full p-4 mt-4 justify-end">
             {currentPage > 1 && (
               <button
                 onClick={handlePrev}
                 className="px-4 py-2 bg-gray-200 rounded mr-2 text-lg font-semibold flex items-center"
               >
-                <FaAngleLeft /> Previous
+                Previous
               </button>
             )}
             {currentPage < totalPages && (
@@ -109,7 +116,7 @@ const PaginatedGrid: React.FC<PaginatedGridProps> = ({
                 onClick={handleNext}
                 className="px-4 py-2 bg-gray-200 rounded ml-2 text-lg font-semibold flex items-center"
               >
-                Next <FaAngleRight />
+                Next
               </button>
             )}
           </div>
@@ -117,6 +124,6 @@ const PaginatedGrid: React.FC<PaginatedGridProps> = ({
       )}
     </div>
   );
-};
+}
 
-export default PaginatedGrid;
+export default PaginatedGrids;
