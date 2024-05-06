@@ -38,8 +38,7 @@ function Favourites() {
   };
   return (
     <div className="flex flex-col items-center justify-center mt-14 w-full">
-      <p className="text-4xl">Dungeons & Dragons</p>
-      <div className="h-20 w-4/5 bg-green-100 rounded-2xl">Favourites </div>
+      <p className="text-4xl">Favourites</p>
       {loading ? (
         <>
           <LoadingScreen />
