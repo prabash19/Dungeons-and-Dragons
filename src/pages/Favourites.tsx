@@ -11,11 +11,12 @@ import { useNavigate } from "react-router-dom";
 import { FaHeart } from "react-icons/fa";
 import { GrFormView } from "react-icons/gr";
 import { MdBookmarkRemove } from "react-icons/md";
+import { SpellDetails } from "../constants/interfaces";
 function Favourites() {
   const navigate = useNavigate();
   const [favs, setFavs] = useState(getLocalStorageValue());
   const favouritesId = getLocalStorageValue();
-  const [results, setResults] = useState<any>([]);
+  const [results, setResults] = useState<SpellDetails[]>();
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
@@ -37,7 +38,8 @@ function Favourites() {
   }, []);
   const removeFavs = (id: string) => {
     removeFromFavourites(id);
-    const updatedResults = results.filter((item: any) => item.index !== id);
+    const updatedResults =
+      results && results.filter((item: SpellDetails) => item.index !== id);
     setResults(updatedResults);
     setFavs(getLocalStorageValue());
   };
@@ -67,7 +69,7 @@ function Favourites() {
             </>
           ) : (
             <div className=" grid gap-4 w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {results.map((data: any, i: number) => (
+              {results?.map((data: SpellDetails, i: number) => (
                 <>
                   <div
                     className="w-full h-full flex  items-center justify-center mt-6 "
@@ -83,7 +85,7 @@ function Favourites() {
                       </h2>
                       <p className=" mb-2 font-semibold">Level: {data.level}</p>
                       <p className=" mb-2 font-semibold">
-                        School: {data.school.name}
+                        School: {data?.school?.name}
                       </p>
                       <p className=" mb-2 font-semibold">Range: {data.range}</p>
                       <p className=" mb-2 font-semibold">

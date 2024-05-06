@@ -4,7 +4,6 @@ export interface Spell {
   level: number;
   url: string;
 }
-
 export type SpellsData = Spell[];
 export interface SpellDetails {
   index: string;
@@ -28,4 +27,8 @@ export interface SpellDetails {
   higher_level?: string[];
   material?: string;
   url: string;
+}
+export interface School {
+  name: string;
+  index: string;
 }

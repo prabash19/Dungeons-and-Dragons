@@ -3,19 +3,8 @@ import axios from "axios";
 import { baseUrl } from "../constants/baseUrl";
 import PaginatedGrid from "../components/PaginatedGrids";
 import { optionValues, magicSchools } from "../constants/optionValues";
-interface Spell {
-  index: string;
-  name: string;
-  level: number;
-  url: string;
-}
+import { SpellsData, School } from "../constants/interfaces";
 
-type SpellsData = Spell[];
-
-interface School {
-  name: string;
-  index: string;
-}
 function Home() {
   const [spellsData, setSpellsData] = useState<SpellsData>([]);
   const [selectedLevel, setSelectedLevel] = useState<string>("");
