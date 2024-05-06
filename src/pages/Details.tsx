@@ -4,7 +4,7 @@ import LoadingScreen from "../components/LoadingScreen";
 import { baseUrl } from "../constants/baseUrl";
 import axios from "axios";
 import { IoMdArrowRoundBack } from "react-icons/io";
-import { useNavigate } from "react-router-dom"; // Use the correct hook
+import { useNavigate } from "react-router-dom";
 
 function Details() {
   const navigate = useNavigate();
