@@ -44,7 +44,7 @@ function Details() {
             <IoMdArrowRoundBack className="text-xl font-semibold" />
             <p className="ml-2 text-xl font-semibold">Back</p>
           </button>
-          <div className="w-full h-full flex items-center justify-center mt-14 dark:text-black">
+          <div className="w-full h-full flex items-center justify-center mt-14 dark:text-black mb-4">
             <div className="max-w-lg p-6 bg-white shadow-lg rounded-lg border border-gray-200">
               <h2 className="w-full text-center text-2xl font-bold mb-2">
                 {data?.name}

@@ -54,10 +54,10 @@ function Favourites() {
       </p>
       {favs.length == 0 ? (
         <>
-          <p className="lg:text-4xl md:text-2xl sm:text-sm font-semibold mt-14 ">
+          <p className="lg:text-4xl md:text-2xl sm:text-sm font-medium mt-14 ">
             No Spell Saved As Favourites !!! <br></br>
           </p>
-          <p className="lg:text-4xl md:text-2xl sm:text-sm font-semibold mt-4 ">
+          <p className="lg:text-4xl md:text-2xl sm:text-sm font-medium mt-4 ">
             Please Save Spells From Home....
           </p>
         </>

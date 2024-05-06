@@ -119,7 +119,7 @@ const PaginatedGrids: React.FC<{ data: SpellsData }> = ({ data }) => {
 
                       {favs.includes(data.index) ? (
                         <button
-                          className="flex items-center justify-center w-1/2 ml-1 py-2 bg-green-400 text-white font-semibold rounded-xl  shadow-lg"
+                          className="flex items-center justify-center w-1/2 ml-1 py-2 bg-red-400 text-white font-semibold rounded-xl  shadow-lg"
                           onClick={() => {
                             removeFavourites(data.index);
                           }}
@@ -127,7 +127,7 @@ const PaginatedGrids: React.FC<{ data: SpellsData }> = ({ data }) => {
                           <p className="pr-2 ">
                             <MdBookmarkRemove className="text-xl" />
                           </p>
-                          <p>Save</p>
+                          <p>Unsave</p>
                         </button>
                       ) : (
                         <button
