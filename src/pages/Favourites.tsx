@@ -6,8 +6,10 @@ import {
 import axios from "axios";
 import { baseUrl } from "../constants/baseUrl";
 import LoadingScreen from "../components/LoadingScreen";
+import { useNavigate } from "react-router-dom";
 
 function Favourites() {
+  const navigate = useNavigate();
   const favouritesId = getLocalStorageValue();
   const [results, setResults] = useState<any>([]);
   const [loading, setLoading] = useState(true);
@@ -43,12 +45,15 @@ function Favourites() {
           <LoadingScreen />
         </>
       ) : (
-        <>
+        <div className="grid gap-4 w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {results.map((item: any, i: number) => {
             return (
               <div
                 key={i}
                 className="w-full h-80 bg-blue-300 rounded-xl shadow-lg hover:shadow-2xl hover:cursor-pointer"
+                onClick={() => {
+                  navigate(`/details/${item.index}`);
+                }}
               >
                 <p>Name:{item.name}</p>
                 <p>range: {item.range}</p>
@@ -65,7 +70,7 @@ function Favourites() {
               </div>
             );
           })}
-        </>
+        </div>
       )}
     </div>
   );

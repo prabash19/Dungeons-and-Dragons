@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import Favourites from "./pages/Favourites";
 import NotFound from "./pages/NotFound";
 import Layout from "./Layout";
+import Details from "./pages/Details";
 function App() {
   return (
     <>
@@ -11,7 +12,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/favourites" element={<Favourites />} />
-            {/* <Route path="/details/:id" element={<Details />} /> */}
+            <Route path="/details/:id" element={<Details />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Layout>

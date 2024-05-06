@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { baseUrl } from "../constants/baseUrl";
 import {
   getLocalStorageValue,
@@ -9,6 +10,8 @@ import {
 import LoadingScreen from "./LoadingScreen";
 
 function PaginatedGrids({ data }: any) {
+  const navigate = useNavigate();
+
   const itemsPerPage = 8;
   const [favs, setFavs] = useState(getLocalStorageValue());
   const [currentPage, setCurrentPage] = useState(1);
@@ -77,6 +80,9 @@ function PaginatedGrids({ data }: any) {
               <div
                 key={i}
                 className="w-full h-80 bg-blue-300 rounded-xl shadow-lg hover:shadow-2xl hover:cursor-pointer"
+                onClick={() => {
+                  navigate(`/details/${item.index}`);
+                }}
               >
                 <p>Name: {item.name}</p>
                 <p>Range: {item.range}</p>
@@ -102,7 +108,7 @@ function PaginatedGrids({ data }: any) {
             ))}
           </div>
 
-          <div className="flex w-full p-4 mt-4 justify-end">
+          <div className="flex w-full p-4 mt-2 justify-end">
             {currentPage > 1 && (
               <button
                 onClick={handlePrev}
