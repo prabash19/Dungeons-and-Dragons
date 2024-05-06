@@ -10,9 +10,6 @@ import {
 import LoadingScreen from "./LoadingScreen";
 import { FaAngleRight, FaAngleLeft, FaHeart } from "react-icons/fa";
 import { GrFormView } from "react-icons/gr";
-import { RiDeleteBin7Fill } from "react-icons/ri";
-import { MdOutlineDelete } from "react-icons/md";
-import { CiBookmarkRemove } from "react-icons/ci";
 import { MdBookmarkRemove } from "react-icons/md";
 
 function PaginatedGrids({ data }: any) {

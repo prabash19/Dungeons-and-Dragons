@@ -27,6 +27,7 @@ function Details() {
     };
     getDataOfSpell();
   }, []);
+
   return (
     <>
       {loading ? (
@@ -36,13 +37,15 @@ function Details() {
       ) : (
         <div className="w-full">
           <button
-            className="flex items-center justify-center px-2 py-2 bg-red-400 w-28 mt-4 rounded-xl  shadow-lg"
+            className="px-4 py-2 bg-gray-200 rounded ml-2 text-lg font-semibold flex items-center shadow-md
+                dark:bg-gray-200 dark:text-black mt-2 hover:shadow-lg
+                "
             onClick={() => navigate(-1)}
           >
             <IoMdArrowRoundBack className="text-xl font-semibold" />
             <p className="ml-2 text-xl font-semibold">Back</p>
           </button>
-          <div className="w-full h-full flex items-center justify-center mt-14">
+          <div className="w-full h-full flex items-center justify-center mt-14 dark:text-black">
             <div className="max-w-lg p-6 bg-white shadow-lg rounded-lg border border-gray-200">
               <h2 className="w-full text-center text-2xl font-bold mb-2">
                 {data.name}
