@@ -50,83 +50,96 @@ function Favourites() {
       <p className="lg:text-4xl md:text-2xl sm:text-sm font-bold ">
         Favourites
       </p>
-      {loading ? (
+      {favs.length == 0 ? (
         <>
-          <LoadingScreen />
+          <p className="lg:text-4xl md:text-2xl sm:text-sm font-semibold mt-14 ">
+            No Spell Saved As Favourites !!! <br></br>
+          </p>
+          <p className="lg:text-4xl md:text-2xl sm:text-sm font-semibold mt-4 ">
+            Please Save Spells From Home....
+          </p>
         </>
       ) : (
-        <div className=" grid gap-4 w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {results.map((data: any, i: number) => (
+        <>
+          {loading ? (
             <>
-              <div
-                className="w-full h-full flex  items-center justify-center mt-6 "
-                key={i}
-              >
-                <div
-                  className="w-full h-full pt-4 px-3 bg-white shadow-lg rounded-xl border border-gray-200
+              <LoadingScreen />
+            </>
+          ) : (
+            <div className=" grid gap-4 w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {results.map((data: any, i: number) => (
+                <>
+                  <div
+                    className="w-full h-full flex  items-center justify-center mt-6 "
+                    key={i}
+                  >
+                    <div
+                      className="w-full h-full pt-4 px-3 bg-white shadow-lg rounded-xl border border-gray-200
                 hover:shadow-2xl hover:cursor-pointer dark:text-black
                 "
-                >
-                  <h2 className="w-full text-center text-2xl font-bold mb-2 pt-2">
-                    {data.name}
-                  </h2>
-                  <p className=" mb-2 font-semibold">Level: {data.level}</p>
-                  <p className=" mb-2 font-semibold">
-                    School: {data.school.name}
-                  </p>
-                  <p className=" mb-2 font-semibold">Range: {data.range}</p>
-                  <p className=" mb-2 font-semibold">
-                    Casting Time: {data.casting_time}
-                  </p>
-                  <p className=" mb-2 font-semibold">
-                    Duration: {data.duration}
-                  </p>
-                  <div className=" flex justify-between w-full mt-4">
-                    <button
-                      className=" flex items-center justify-center w-1/2 mr-1 py-2 bg-darkBlue text-white font-semibold rounded-xl
+                    >
+                      <h2 className="w-full text-center text-2xl font-bold mb-2 pt-2">
+                        {data.name}
+                      </h2>
+                      <p className=" mb-2 font-semibold">Level: {data.level}</p>
+                      <p className=" mb-2 font-semibold">
+                        School: {data.school.name}
+                      </p>
+                      <p className=" mb-2 font-semibold">Range: {data.range}</p>
+                      <p className=" mb-2 font-semibold">
+                        Casting Time: {data.casting_time}
+                      </p>
+                      <p className=" mb-2 font-semibold">
+                        Duration: {data.duration}
+                      </p>
+                      <div className=" flex justify-between w-full mt-4">
+                        <button
+                          className=" flex items-center justify-center w-1/2 mr-1 py-2 bg-darkBlue text-white font-semibold rounded-xl
                       shadow-lg
                       "
-                      onClick={() => {
-                        navigate(`/details/${data.index}`);
-                      }}
-                    >
-                      <p className="pr-2 text-3xl">
-                        <GrFormView />
-                      </p>
-                      <p>View</p>
-                    </button>
+                          onClick={() => {
+                            navigate(`/details/${data.index}`);
+                          }}
+                        >
+                          <p className="pr-2 text-3xl">
+                            <GrFormView />
+                          </p>
+                          <p>View</p>
+                        </button>
 
-                    {favs.includes(data.index) ? (
-                      <button
-                        className="flex items-center justify-center w-1/2 ml-1 py-2 bg-green-400 text-white font-semibold rounded-xl  shadow-lg"
-                        onClick={() => {
-                          removeFavs(data.index);
-                        }}
-                      >
-                        <p className="pr-2 ">
-                          <MdBookmarkRemove className="text-xl" />
-                        </p>
-                        <p>Save</p>
-                      </button>
-                    ) : (
-                      <button
-                        className="flex items-center justify-center w-1/2 ml-1 py-2 bg-green-400 text-white font-semibold rounded-xl  shadow-lg"
-                        onClick={() => {
-                          saveFavourites(data.index);
-                        }}
-                      >
-                        <p className="pr-2">
-                          <FaHeart />
-                        </p>
-                        <p>Save</p>
-                      </button>
-                    )}
+                        {favs.includes(data.index) ? (
+                          <button
+                            className="flex items-center justify-center w-1/2 ml-1 py-2 bg-red-400 text-white font-semibold rounded-xl  shadow-lg"
+                            onClick={() => {
+                              removeFavs(data.index);
+                            }}
+                          >
+                            <p className="pr-2 ">
+                              <MdBookmarkRemove className="text-xl" />
+                            </p>
+                            <p>Unsave</p>
+                          </button>
+                        ) : (
+                          <button
+                            className="flex items-center justify-center w-1/2 ml-1 py-2 bg-green-400 text-white font-semibold rounded-xl  shadow-lg"
+                            onClick={() => {
+                              saveFavourites(data.index);
+                            }}
+                          >
+                            <p className="pr-2">
+                              <FaHeart />
+                            </p>
+                            <p>Save</p>
+                          </button>
+                        )}
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            </>
-          ))}
-        </div>
+                </>
+              ))}
+            </div>
+          )}
+        </>
       )}
     </div>
   );
