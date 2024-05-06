@@ -11,21 +11,13 @@ import LoadingScreen from "./LoadingScreen";
 import { FaAngleRight, FaAngleLeft, FaHeart } from "react-icons/fa";
 import { GrFormView } from "react-icons/gr";
 import { MdBookmarkRemove } from "react-icons/md";
-interface Spell {
-  index: string;
-  name: string;
-  level: number;
-  url: string;
-}
-
-type SpellsData = Spell[];
-
+import { SpellDetails, SpellsData, Spell } from "../constants/interfaces";
 const PaginatedGrids: React.FC<{ data: SpellsData }> = ({ data }) => {
   const navigate = useNavigate();
   const itemsPerPage = 8;
   const [favs, setFavs] = useState(getLocalStorageValue());
   const [currentPage, setCurrentPage] = useState(1);
-  const [combinedData, setCombinedData] = useState<any>([]);
+  const [combinedData, setCombinedData] = useState<SpellDetails[]>([]);
   const [loading, setLoading] = useState(true);
 
   const totalPages = useMemo(
@@ -44,7 +36,7 @@ const PaginatedGrids: React.FC<{ data: SpellsData }> = ({ data }) => {
       setLoading(true);
       try {
         const responses = await Promise.all(
-          pageData.map((item: any) => axios.get(`${baseUrl}/${item.index}`))
+          pageData.map((item: Spell) => axios.get(`${baseUrl}/${item.index}`))
         );
         const combinedDataForPage = responses.map((response) => response.data);
         setCombinedData(combinedDataForPage);
@@ -78,7 +70,6 @@ const PaginatedGrids: React.FC<{ data: SpellsData }> = ({ data }) => {
     removeFromFavourites(id);
     setFavs(getLocalStorageValue());
   };
-  console.log("combined data is", combinedData);
   return (
     <div className="flex flex-col w-full">
       {loading ? (
@@ -86,7 +77,7 @@ const PaginatedGrids: React.FC<{ data: SpellsData }> = ({ data }) => {
       ) : (
         <>
           <div className="grid gap-4 w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {combinedData.map((data: any, i: number) => (
+            {combinedData.map((data: SpellDetails, i: number) => (
               <>
                 <div
                   className="w-full h-full flex  items-center justify-center mt-6 "
@@ -102,7 +93,7 @@ const PaginatedGrids: React.FC<{ data: SpellsData }> = ({ data }) => {
                     </h2>
                     <p className=" mb-2 font-semibold">Level: {data.level}</p>
                     <p className=" mb-2 font-semibold">
-                      School: {data.school.name}
+                      School: {data?.school?.name}
                     </p>
                     <p className=" mb-2 font-semibold">Range: {data.range}</p>
                     <p className=" mb-2 font-semibold">
