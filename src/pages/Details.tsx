@@ -38,7 +38,7 @@ function Details() {
         <div className="w-full">
           <button
             className="px-4 py-2 bg-gray-200 rounded ml-2 text-lg font-semibold flex items-center shadow-md
-                dark:bg-gray-200 dark:text-black mt-2 hover:shadow-lg
+                dark:bg-gray-200 dark:text-black mt-4 hover:shadow-lg
                 "
             onClick={() => navigate(-1)}
           >

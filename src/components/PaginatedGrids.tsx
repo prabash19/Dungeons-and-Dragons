@@ -11,8 +11,16 @@ import LoadingScreen from "./LoadingScreen";
 import { FaAngleRight, FaAngleLeft, FaHeart } from "react-icons/fa";
 import { GrFormView } from "react-icons/gr";
 import { MdBookmarkRemove } from "react-icons/md";
+interface Spell {
+  index: string;
+  name: string;
+  level: number;
+  url: string;
+}
 
-function PaginatedGrids({ data }: any) {
+type SpellsData = Spell[];
+
+const PaginatedGrids: React.FC<{ data: SpellsData }> = ({ data }) => {
   const navigate = useNavigate();
   const itemsPerPage = 8;
   const [favs, setFavs] = useState(getLocalStorageValue());
@@ -182,6 +190,6 @@ function PaginatedGrids({ data }: any) {
       )}
     </div>
   );
-}
+};
 
 export default PaginatedGrids;

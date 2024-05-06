@@ -3,9 +3,21 @@ import axios from "axios";
 import { baseUrl } from "../constants/baseUrl";
 import PaginatedGrid from "../components/PaginatedGrids";
 import { optionValues, magicSchools } from "../constants/optionValues";
+interface Spell {
+  index: string;
+  name: string;
+  level: number;
+  url: string;
+}
 
+type SpellsData = Spell[];
+
+interface School {
+  name: string;
+  index: string;
+}
 function Home() {
-  const [spellsData, setSpellsData] = useState<any>([]);
+  const [spellsData, setSpellsData] = useState<SpellsData>([]);
   const [selectedLevel, setSelectedLevel] = useState<string>("");
   const [selectedSchool, setSelectedSchool] = useState<string>("");
   const handleLevelChange = (event: ChangeEvent<HTMLSelectElement>) => {
@@ -71,7 +83,7 @@ function Home() {
             onChange={handleSchoolChange}
           >
             <option value="">All Schools</option>
-            {magicSchools.map((val: any) => {
+            {magicSchools.map((val: School) => {
               return (
                 <option key={val.index} value={String(val.index)}>
                   {val.name}
