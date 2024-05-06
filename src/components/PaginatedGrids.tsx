@@ -8,10 +8,15 @@ import {
   saveAsFavourites,
 } from "../helpers/localStorage";
 import LoadingScreen from "./LoadingScreen";
+import { FaAngleRight, FaAngleLeft, FaHeart } from "react-icons/fa";
+import { GrFormView } from "react-icons/gr";
+import { RiDeleteBin7Fill } from "react-icons/ri";
+import { MdOutlineDelete } from "react-icons/md";
+import { CiBookmarkRemove } from "react-icons/ci";
+import { MdBookmarkRemove } from "react-icons/md";
 
 function PaginatedGrids({ data }: any) {
   const navigate = useNavigate();
-
   const itemsPerPage = 8;
   const [favs, setFavs] = useState(getLocalStorageValue());
   const [currentPage, setCurrentPage] = useState(1);
@@ -68,7 +73,7 @@ function PaginatedGrids({ data }: any) {
     removeFromFavourites(id);
     setFavs(getLocalStorageValue());
   };
-
+  console.log("combined data is", combinedData);
   return (
     <div className="flex flex-col w-full">
       {loading ? (
@@ -76,53 +81,103 @@ function PaginatedGrids({ data }: any) {
       ) : (
         <>
           <div className="grid gap-4 w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {combinedData.map((item: any, i: number) => (
-              <div
-                key={i}
-                className="w-full h-80 bg-blue-300 rounded-xl shadow-lg hover:shadow-2xl hover:cursor-pointer"
-                onClick={() => {
-                  navigate(`/details/${item.index}`);
-                }}
-              >
-                <p>Name: {item.name}</p>
-                <p>Range: {item.range}</p>
-                <p>Casting Time: {item.casting_time}</p>
-                <p>Level: {item.level}</p>
-                <p>Duration: {item.duration}</p>
-                {favs.includes(item.index) ? (
-                  <button
-                    className="bg-red-500 p-2"
-                    onClick={() => removeFavourites(item.index)}
+            {combinedData.map((data: any, i: number) => (
+              <>
+                <div
+                  className="w-full h-full flex  items-center justify-center mt-6 "
+                  key={i}
+                >
+                  <div
+                    className="w-full h-full pt-4 px-3 bg-white shadow-lg rounded-xl border border-gray-200
+                hover:shadow-2xl hover:cursor-pointer dark:text-black
+                "
                   >
-                    Remove
-                  </button>
-                ) : (
-                  <button
-                    className="bg-green-500 p-2"
-                    onClick={() => saveFavourites(item.index)}
-                  >
-                    Add to Fav
-                  </button>
-                )}
-              </div>
+                    <h2 className="w-full text-center text-2xl font-bold mb-2 pt-2">
+                      {data.name}
+                    </h2>
+                    <p className=" mb-2 font-semibold">Level: {data.level}</p>
+                    <p className=" mb-2 font-semibold">
+                      School: {data.school.name}
+                    </p>
+                    <p className=" mb-2 font-semibold">Range: {data.range}</p>
+                    <p className=" mb-2 font-semibold">
+                      Casting Time: {data.casting_time}
+                    </p>
+                    <p className=" mb-2 font-semibold">
+                      Duration: {data.duration}
+                    </p>
+                    <div className=" flex justify-between w-full mt-4">
+                      <button
+                        className=" flex items-center justify-center w-1/2 mr-1 py-2 bg-darkBlue text-white font-semibold rounded-xl
+                      shadow-lg
+                      "
+                        onClick={() => {
+                          navigate(`details/${data.index}`);
+                        }}
+                      >
+                        <p className="pr-2 text-3xl">
+                          <GrFormView />
+                        </p>
+                        <p>View</p>
+                      </button>
+
+                      {favs.includes(data.index) ? (
+                        <button
+                          className="flex items-center justify-center w-1/2 ml-1 py-2 bg-green-400 text-white font-semibold rounded-xl  shadow-lg"
+                          onClick={() => {
+                            removeFavourites(data.index);
+                          }}
+                        >
+                          <p className="pr-2 ">
+                            <MdBookmarkRemove className="text-xl" />
+                          </p>
+                          <p>Save</p>
+                        </button>
+                      ) : (
+                        <button
+                          className="flex items-center justify-center w-1/2 ml-1 py-2 bg-green-400 text-white font-semibold rounded-xl  shadow-lg"
+                          onClick={() => {
+                            saveFavourites(data.index);
+                          }}
+                        >
+                          <p className="pr-2">
+                            <FaHeart />
+                          </p>
+                          <p>Save</p>
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </>
             ))}
           </div>
 
-          <div className="flex w-full p-4 mt-2 justify-end">
+          <div className="flex w-full p-4 mt-6 justify-end">
             {currentPage > 1 && (
               <button
                 onClick={handlePrev}
-                className="px-4 py-2 bg-gray-200 rounded mr-2 text-lg font-semibold flex items-center"
+                className="px-4 py-2 bg-gray-200 rounded ml-2 text-lg font-semibold flex items-center shadow-lg
+                dark:bg-gray-200 dark:text-black
+                "
               >
-                Previous
+                <p>
+                  <FaAngleLeft />
+                </p>
+                <p className="pl-2">Previous</p>
               </button>
             )}
             {currentPage < totalPages && (
               <button
                 onClick={handleNext}
-                className="px-4 py-2 bg-gray-200 rounded ml-2 text-lg font-semibold flex items-center"
+                className="px-4 py-2 bg-gray-200 rounded ml-2 text-lg font-semibold flex items-center shadow-lg
+                dark:bg-gray-200 dark:text-black
+                "
               >
-                Next
+                <p>Next</p>
+                <p className="pl-2">
+                  <FaAngleRight />
+                </p>
               </button>
             )}
           </div>

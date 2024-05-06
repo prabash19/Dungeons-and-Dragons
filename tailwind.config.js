@@ -9,6 +9,7 @@ export default {
         darkBg: "#1a1a1a",
         lightText: "#000000",
         darkText: "#f5f5f5",
+        darkBlue: "#5D3FD3	",
       },
       fontSize: {
         small: "14px",

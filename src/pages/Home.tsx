@@ -39,13 +39,17 @@ function Home() {
   }, [selectedLevel, selectedSchool]);
 
   return (
-    <div className="flex flex-col items-center justify-center mt-14 w-full">
-      <p className="text-4xl">Dungeons & Dragons</p>
-      <div className="h-20 w-4/5 bg-green-400 rounded-2xl flex justify-center items-center mt-2">
-        <div className="w-4/5  flex items-center justify-between px-16">
-          <p className="">Level:</p>
+    <div className="flex flex-col items-center justify-center mt-6 w-full">
+      <p className="lg:text-4xl md:text-2xl sm:text-sm font-bold ">
+        Dungeons & Dragons
+      </p>
+      <div className="h-20 w-4/5 dark:bg-white bg-black rounded-2xl flex justify-center items-center mt-6">
+        <div className="w-4/5  flex items-center justify-between px-16 ">
+          <p className="text-white dark:text-black text-lg font-semibold">
+            Level :
+          </p>
           <select
-            className="w-2/3 rounded-lg sm:text-sm h-10 outline-none focus:border-none "
+            className="lg:w-2/3 md:1/2 sm:full dark:bg-black rounded-lg sm:text-sm h-10 outline-none focus:border-none "
             value={selectedLevel}
             onChange={handleLevelChange}
           >
@@ -58,9 +62,11 @@ function Home() {
           </select>
         </div>
         <div className="w-4/5  flex items-center justify-between px-16 ">
-          <p className="">Magic School:</p>
+          <p className="text-white dark:text-black text-lg font-semibold">
+            Magic School :
+          </p>
           <select
-            className="w-2/3 rounded-lg sm:text-sm h-10  outline-none focus:border-none"
+            className="w-2/3 dark:bg-black rounded-lg sm:text-sm h-10  outline-none focus:border-none"
             value={selectedSchool}
             onChange={handleSchoolChange}
           >
